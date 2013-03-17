@@ -3764,7 +3764,11 @@ sp<ResourceTable::Package> ResourceTable::getPackage(const String16& package)
                 }
                 p = new Package(package, extendedPackageId);
             } else {
-                p = new Package(package, mNextPackageId);
+                int forcedPackageId = mBundle->getForcedPackageId();
+                if(forcedPackageId != -1)
+                    p = new Package(package, forcedPackageId);
+                else
+                    p = new Package(package, mNextPackageId);
             }
         }
         //printf("*** NEW PACKAGE: \"%s\" id=%d\n",
